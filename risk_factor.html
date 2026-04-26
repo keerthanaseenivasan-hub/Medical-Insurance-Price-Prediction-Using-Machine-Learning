@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Factor & Lifestyle</title>
+    <style>
+
+/* -------- Global -------- */
+body{
+    font-family: Arial;
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    background: linear-gradient(rgba(18,104,196,0.5),rgba(18,104,196,0.5)),
+                url("/static/m1.jpg");
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+/* -------- Floating Particles -------- */
+.particles{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+.particles span{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:0.6;
+    animation:floatParticle 18s linear infinite;
+}
+
+.particles span:nth-child(1){left:10%;}
+.particles span:nth-child(2){left:30%;}
+.particles span:nth-child(3){left:50%;}
+.particles span:nth-child(4){left:70%;}
+.particles span:nth-child(5){left:90%;}
+
+@keyframes floatParticle{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:0.8;}
+100%{transform:translateY(-100px);opacity:0;}
+}
+
+/* -------- Medical Cross -------- */
+.medical-icon{
+    font-size:60px;
+    color:#00e5ff;
+    margin-top:20px;
+    animation:crossGlow 1.5s infinite alternate;
+}
+
+@keyframes crossGlow{
+from{
+transform:scale(1);
+text-shadow:0 0 10px #00e5ff,0 0 20px #00e5ff;
+}
+to{
+transform:scale(1.2);
+text-shadow:0 0 25px #00e5ff,0 0 40px #00e5ff;
+}
+}
+
+/* -------- Heartbeat ECG -------- */
+.heartbeat{
+    width:250px;
+    margin:10px auto 25px;
+}
+
+.heartbeat svg{
+    width:100%;
+    height:60px;
+}
+
+.heartbeat polyline{
+    fill:none;
+    stroke:#00ff88;
+    stroke-width:4;
+    stroke-dasharray:450;
+    stroke-dashoffset:450;
+
+    filter: drop-shadow(0 0 8px #00ff88)
+            drop-shadow(0 0 18px #00ff88);
+
+    animation:heartMove 2s linear infinite;
+}
+
+@keyframes heartMove{
+0%{stroke-dashoffset:450;}
+100%{stroke-dashoffset:0;}
+}
+
+/* -------- Headings -------- */
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+h2{
+    margin-top:20px;
+    color:#ffffff;
+    border-left:4px solid #00e5ff;
+    padding-left:10px;
+}
+
+/* -------- Glass Form -------- */
+form{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:12px;
+    padding:30px;
+    max-width:650px;
+    width:90%;
+    margin:auto;
+    border:1px solid rgba(255,255,255,0.3);
+
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    z-index:1;
+}
+
+/* -------- Checkbox -------- */
+input[type="checkbox"]{
+    margin-right:8px;
+}
+
+/* -------- Label -------- */
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* -------- Select -------- */
+select{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:6px;
+    border:none;
+}
+
+/* -------- Button -------- */
+button{
+    width:100%;
+    padding:12px;
+    margin-top:25px;
+    background:linear-gradient(45deg,#4a90e2,#007bff);
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px white;
+}
+
+/* -------- Responsive -------- */
+@media (max-width:700px){
+form{
+padding:20px;
+margin:10px;
+}
+}
+/* AI scanning line */
+.scan-line{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:3px;
+
+background:linear-gradient(
+90deg,
+transparent,
+#00e5ff,
+transparent
+);
+
+animation:scanMove 4s linear infinite;
+
+opacity:0.7;
+}
+
+/* scanning animation */
+@keyframes scanMove{
+
+0%{
+transform:translateY(0);
+}
+
+100%{
+transform:translateY(100vh);
+}
+
+}
+</style>
+
+</head>
+
+<body>
+<div class="scan-line"></div>
+<!-- Particles -->
+<div class="particles">
+<span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Cross -->
+<div class="medical-icon">+</div>
+
+<!-- Heartbeat -->
+<div class="heartbeat">
+<svg viewBox="0 0 500 100">
+<polyline points="0,50 40,50 60,20 80,80 100,50 140,50 160,30 180,70 200,50 500,50"/>
+</svg>
+</div>
+
+
+    <h1>Risk Factor & Lifestyle</h1>
+
+    <form method="POST">
+
+        <h2>Family Medical History</h2>
+        <input type="checkbox" name="family_history" value="diabetes"> Diabetes<br>
+        <input type="checkbox" name="family_history" value="heart_disease"> Heart Disease<br>
+        <input type="checkbox" name="family_history" value="cancer"> Cancer<br>
+        <input type="checkbox" name="family_history" value="hypertension"> Hypertension<br>
+        <input type="checkbox" name="family_history" value="stroke"> Stroke<br>
+        <input type="checkbox" name="family_history" value="none"> None<br>
+
+        <h2>Current Medical History</h2>
+        <input type="checkbox" name="current_history" value="diabetes"> Diabetes<br>
+        <input type="checkbox" name="current_history" value="heart_disease"> Heart Disease<br>
+        <input type="checkbox" name="current_history" value="cancer"> Cancer<br>
+        <input type="checkbox" name="current_history" value="hypertension"> Hypertension<br>
+        <input type="checkbox" name="current_history" value="stroke"> Stroke<br>
+        <input type="checkbox" name="current_history" value="none"> None<br>
+
+        <h2>Location</h2>
+        <select name="location" required>
+            <option value="urban">Urban</option>
+            <option value="semi-urban">Semi-Urban</option>
+            <option value="rural">Rural</option>
+        </select><br><br>
+
+        <h2>Lifestyle</h2>
+        <label>Exercise Level:</label>
+        <select name="exercise" required>
+            <option value="normal">Normal</option>
+            <option value="moderate">Moderate</option>
+            <option value="none">None</option>
+        </select><br><br>
+
+        <label>Alcohol Consumption:</label>
+        <select name="alcohol" required>
+            <option value="none">None</option>
+            <option value="moderate">Moderate</option>
+            <option value="high">High</option>
+        </select><br><br>
+
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Algorithm Performance</title>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+/* Background */
+
+body{
+
+background:
+linear-gradient(rgba(29, 168, 170, 0.6),rgba(27, 190, 198, 0.6)),
+url("/static/m2.jpg");
+
+background-size:cover;
+background-position:center;
+
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:30px;
+
+color:white;
+
+}
+
+/* Floating background */
+
+body::before,
+body::after{
+
+content:"";
+
+position:absolute;
+
+width:250px;
+height:250px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,0.08);
+
+animation:floatBg 10s infinite alternate;
+
+}
+
+body::before{
+top:10%;
+left:10%;
+}
+
+body::after{
+bottom:10%;
+right:10%;
+}
+
+@keyframes floatBg{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-50px);
+}
+
+}
+
+/* Container */
+
+.container{
+
+background:rgba(255,255,255,0.15);
+
+backdrop-filter:blur(12px);
+
+padding:30px;
+
+border-radius:10px;
+
+width:800px;
+
+box-shadow:
+0 0 20px rgba(74,144,226,0.4),
+0 0 40px rgba(74,144,226,0.2);
+
+text-align:center;
+
+}
+
+/* Title */
+
+h1{
+margin-bottom:20px;
+}
+
+/* Metrics list */
+
+ul{
+list-style:none;
+padding:0;
+}
+
+/* Metric box */
+
+.metric-box{
+
+background:rgba(255,255,255,0.15);
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:6px;
+
+border-left:4px solid #4a90e2;
+
+}
+
+/* Chart */
+
+canvas{
+margin-top:30px;
+}
+
+#performanceChart{
+
+max-width:600px;
+
+height:400px;
+
+margin:20px auto;
+
+display:block;
+
+}
+
+/* Button */
+
+a{
+
+text-decoration:none;
+
+background:linear-gradient(45deg,#4a90e2,#007bff);
+
+color:white;
+
+padding:10px 20px;
+
+border-radius:6px;
+
+transition:0.3s;
+
+}
+
+a:hover{
+
+transform:scale(1.05);
+
+box-shadow:0 0 15px white;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Algorithm Performance (Regression)</h1>
+
+
+
+<!-- Display metrics -->
+<ul>
+    {% for model_name, data in metrics.items() %}
+        <li><strong>{{ model_name }}</strong></li>
+        <li>R² Score : {{ data.r2 }}</li>
+        <li>MAE      : {{ data.mae }}</li>
+        <li>RMSE     : {{ data.rmse }}</li>
+        <br>
+    {% endfor %}
+</ul>
+
+<canvas id="performanceChart"></canvas>
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const modelMetrics = JSON.parse('{{ metrics | tojson | safe }}');
+
+    const labels = Object.keys(modelMetrics);
+    const r2Data   = labels.map(l => modelMetrics[l].r2);
+    const maeData  = labels.map(l => modelMetrics[l].mae);
+    const rmseData = labels.map(l => modelMetrics[l].rmse);
+
+    const data = {
+        labels: labels,
+        datasets: [
+    {
+        label: 'R² Score',
+        data: r2Data,
+        yAxisID: 'y1',
+        backgroundColor: 'rgba(33, 150, 243, 0.7)'
+    },
+    {
+        label: 'MAE',
+        data: maeData,
+        yAxisID: 'y',
+        backgroundColor: 'rgba(76, 175, 80, 0.7)'
+    },
+    {
+        label: 'RMSE',
+        data: rmseData,
+        yAxisID: 'y',
+        backgroundColor: 'rgba(244, 67, 54, 0.7)'
+    }
+]
+
+        
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Regression Model Comparison'
+                }
+            },
+            scales: {
+    y: {
+        beginAtZero: true,
+        position: 'left',
+        title: {
+            display: true,
+            text: 'MAE / RMSE'
+        }
+    },
+    y1: {
+        beginAtZero: true,
+        max: 1,
+        position: 'right',
+        grid: {
+            drawOnChartArea: false
+        },
+        title: {
+            display: true,
+            text: 'R² Score'
+        }
+    }
+}
+
+        }
+    };
+
+    new Chart(document.getElementById('performanceChart'), config);
+</script>
+
+<br>
+<a href="{{ url_for('index') }}">Back to Home</a>
+
+</body>
+</html>

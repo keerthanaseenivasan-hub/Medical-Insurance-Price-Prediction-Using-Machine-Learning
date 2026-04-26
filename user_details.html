@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+    <style>
+   /* ----------------- Global ----------------- */
+body{
+    font-family: Arial, sans-serif;
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background: linear-gradient(rgba(18,104,196,0.4), rgba(18,104,196,0.4)),
+                url("/static/m1.jpg");
+    background-size: cover;
+    background-position: center;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ----------------- Floating Particles ----------------- */
+.particles{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0; left:0;
+    z-index:0;
+}
+.particles span{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:0.6;
+    animation:floatParticle 18s linear infinite;
+}
+.particles span:nth-child(1){left:10%;}
+.particles span:nth-child(2){left:30%;}
+.particles span:nth-child(3){left:50%;}
+.particles span:nth-child(4){left:70%;}
+.particles span:nth-child(5){left:90%;}
+@keyframes floatParticle{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:0.7;}
+100%{transform:translateY(-100px);opacity:0;}
+}
+
+/* ----------------- Heartbeat ----------------- */
+.heartbeat{
+    width:220px;
+    margin:15px auto 20px;
+    z-index:1;
+    position:relative;
+}
+.heartbeat svg{
+    width:100%;
+    height:50px;
+}
+.heartbeat polyline{
+    fill:none;
+    stroke:#00e676;
+    stroke-width:4;
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    animation:heartMove 2s linear infinite;
+}
+@keyframes heartMove{
+0%{stroke-dashoffset:400;}
+100%{stroke-dashoffset:0;}
+}
+
+/* ----------------- Medical Cross Icon ----------------- */
+.medical-icon{
+    font-size:55px;
+    color:#4a90e2;
+    margin:10px 0;
+    animation:crossGlow 2s infinite alternate;
+}
+@keyframes crossGlow{
+from{transform:scale(1);text-shadow:0 0 10px #4a90e2;}
+to{transform:scale(1.2);text-shadow:0 0 25px #4a90e2;}
+}
+
+/* ----------------- Titles ----------------- */
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* ----------------- Glass Card Forms ----------------- */
+form, .bmi-box{
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius:12px;
+    padding:30px;
+    max-width:600px;
+    width:90%;
+    margin:20px auto;
+    border:1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 20px rgba(74,144,226,0.5), 0 0 40px rgba(74,144,226,0.3);
+    z-index:1;
+    position:relative;
+    animation:floatBox 3s ease-in-out infinite alternate;
+}
+@keyframes floatBox{
+from{transform:translateY(0);}
+to{transform:translateY(-8px);}
+}
+
+/* ----------------- Labels ----------------- */
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:600;
+    color:white;
+}
+
+/* ----------------- Inputs & Selects ----------------- */
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:6px;
+    border:none;
+    outline:none;
+}
+
+/* ----------------- Button ----------------- */
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    background:linear-gradient(45deg,#4a90e2,#007bff);
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+}
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px white;
+}
+button::before{
+    content:"";
+    position:absolute;
+    top:0; left:-100%;
+    width:100%; height:100%;
+    background: linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+    transition:0.5s;
+}
+button:hover::before{
+    left:100%;
+}
+
+/* ----------------- BMI Result ----------------- */
+.result{
+    margin-top:15px;
+    padding:12px;
+    background:rgba(255,255,255,0.2);
+    border-left:4px solid #4a90e2;
+    border-radius:6px;
+    color:white;
+}
+
+/* ----------------- Family Section ----------------- */
+#family_forms{margin-top:20px;}
+hr{
+    margin:25px 0;
+    border:none;
+    border-top:1px solid rgba(255,255,255,0.3);
+}
+
+/* ----------------- Responsive ----------------- */
+@media (max-width:650px){
+    form,.bmi-box{
+        margin:10px;
+        padding:20px;
+    }
+}
+/* -------- Medical Cross Glow -------- */
+.medical-icon{
+    font-size:60px;
+    color:#00e5ff;
+    text-align:center;
+    margin-bottom:10px;
+    animation:crossGlow 1.5s infinite alternate;
+}
+
+@keyframes crossGlow{
+    from{
+        transform:scale(1);
+        text-shadow:0 0 10px #00e5ff,
+                     0 0 20px #00e5ff,
+                     0 0 30px #00e5ff;
+    }
+    to{
+        transform:scale(1.2);
+        text-shadow:0 0 20px #00e5ff,
+                     0 0 40px #00e5ff,
+                     0 0 60px #00e5ff;
+    }
+}
+
+
+/* -------- Heartbeat ECG Animation -------- */
+.heartbeat{
+    width:260px;
+    margin:0 auto 20px;
+}
+
+.heartbeat svg{
+    width:100%;
+    height:60px;
+}
+
+.heartbeat polyline{
+    fill:none;
+    stroke:#00ff88;
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+
+    stroke-dasharray:450;
+    stroke-dashoffset:450;
+
+    filter: drop-shadow(0 0 8px #00ff88)
+            drop-shadow(0 0 15px #00ff88);
+
+    animation:heartMove 2s linear infinite;
+}
+
+@keyframes heartMove{
+    0%{
+        stroke-dashoffset:450;
+    }
+    100%{
+        stroke-dashoffset:0;
+    }
+}/* AI scanning line */
+.scan-line{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:3px;
+
+background:linear-gradient(
+90deg,
+transparent,
+#00e5ff,
+transparent
+);
+
+animation:scanMove 4s linear infinite;
+
+opacity:0.7;
+}
+
+/* scanning animation */
+@keyframes scanMove{
+
+0%{
+transform:translateY(0);
+}
+
+100%{
+transform:translateY(100vh);
+}
+
+}
+
+
+    </style>
+</head>
+<body onload="toggleFamily()">
+<div class="scan-line"></div>
+<!-- Floating Particles -->
+<div class="particles">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Medical Cross -->
+<div class="medical-icon">+</div>
+
+
+<!-- Heartbeat -->
+<div class="heartbeat">
+<svg viewBox="0 0 500 100">
+<polyline points="0,50 40,50 60,20 80,80 100,50 140,50 160,30 180,70 200,50 500,50"/>
+</svg>
+</div>
+    <script>
+        function showFamilyForms() {
+            var familyCount = document.getElementById("family_count").value;
+            var container = document.getElementById("family_forms");
+            container.innerHTML = ""; // Clear previous forms
+            for (var i = 1; i <= familyCount; i++) {
+                var html = `
+                <h3>Family Member ${i}</h3>
+                <label>Age:</label>
+                <input type="number" name="age_${i}" required><br>
+
+                <label>Gender:</label>
+                <select name="gender_${i}" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select><br>
+
+                <label>BMI:</label>
+                <input type="number" step="0.1" name="bmi_${i}" required><br>
+
+                <label>No. of Children:</label>
+                <input type="number" name="children_${i}" required><br>
+
+                <label>Region:</label>
+<select name="region_${i}" required>
+{% for name, value in region.items() %}
+<option value="{{ value }}">{{ name }}</option>
+{% endfor %}
+</select><br>
+
+                <label>Smoker:</label>
+                <select name="smoker_${i}" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br><hr>
+                `;
+                container.innerHTML += html;
+            }
+        }
+
+        
+function toggleFamily() {
+    var type = document.getElementById("insurance_type").value;
+
+    var singleInputs = document.querySelectorAll("#single_form input, #single_form select");
+    var familyInputs = document.querySelectorAll("#family_forms input, #family_forms select");
+
+    if (type === "family") {
+        document.getElementById("family_count_div").style.display = "block";
+        document.getElementById("single_form").style.display = "none";
+
+        singleInputs.forEach(el => el.removeAttribute("required"));
+        familyInputs.forEach(el => el.setAttribute("required", true));
+
+    } else {
+        document.getElementById("family_count_div").style.display = "none";
+        document.getElementById("single_form").style.display = "block";
+
+        familyInputs.forEach(el => el.removeAttribute("required"));
+        singleInputs.forEach(el => el.setAttribute("required", true));
+    }
+}
+
+
+    </script>
+</head>
+<body onload="toggleFamily()">
+       <div class="bmi-box">
+
+<h1>BMI Calculator</h1>
+
+<label>Weight (kg):</label>
+<input type="number" id="weight" step="0.1">
+
+<label>Height (cm):</label>
+<input type="number" id="height" step="0.1">
+
+<button type="button" onclick="calculateBMI()">Calculate BMI</button>
+
+<div class="result" id="result"></div>
+
+</div>
+    <script>
+        function calculateBMI() {
+            var weight = parseFloat(document.getElementById('weight').value);
+            var height_cm = parseFloat(document.getElementById('height').value);
+            
+            if (!weight || !height_cm) {
+                alert("Please enter weight and height!");
+                return;
+            }
+
+            var height_m = height_cm / 100;
+            var bmi = weight / (height_m * height_m);
+            bmi = bmi.toFixed(2);
+
+            var category = "";
+            if (bmi < 18.5) category = "Underweight";
+            else if (bmi < 24.9) category = "Normal weight";
+            else if (bmi < 29.9) category = "Overweight";
+            else category = "Obese";
+
+            document.getElementById('result').innerHTML = 
+                "Your BMI: " + bmi + " (" + category + ")";
+        }
+    </script>
+    <h1>User Details</h1>
+
+
+    <form method="POST">
+         <label>Insurance Type:</label>
+    <select id="insurance_type" name="insurance_type" onchange="toggleFamily()">
+        <option value="single" {% if session['insurance_type']=='single' %}selected{% endif %}>Single</option>
+        <option value="family" {% if session['insurance_type']=='family' %}selected{% endif %}>Family</option>
+    </select><br><br>
+
+        <!-- Single Form -->
+        <div id="single_form">
+            <label>Age:</label>
+            <input type="number" name="age" required><br>
+
+            <label>Gender:</label>
+            <select name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br>
+
+            <label>BMI:</label>
+            <input type="number" step="0.1" name="bmi" required><br>
+
+            <label>No. of Children:</label>
+            <input type="number" name="children" required><br>
+<label>Region</label>
+<select id="region" name="region"required>
+<option value="Ariyalur">Ariyalur</option>
+<option value="Chengalpattu">Chengalpattu</option>
+<option value="Chennai">Chennai</option>
+<option value="Coimbatore">Coimbatore</option>
+<option value="Cuddalore">Cuddalore</option>
+<option value="Dharmapuri">Dharmapuri</option>
+<option value="Dindigul">Dindigul</option>
+<option value="Erode">Erode</option>
+<option value="Kallakurichi">Kallakurichi</option>
+<option value="Kancheepuram">Kancheepuram</option>
+<option value="Karur">Karur</option>
+<option value="Krishnagiri">Krishnagiri</option>
+<option value="Madurai">Madurai</option>
+<option value="Mayiladuthurai">Mayiladuthurai</option>
+<option value="Nagapattinam">Nagapattinam</option>
+<option value="Namakkal">Namakkal</option>
+<option value="Nilgiris">Nilgiris</option>
+<option value="Perambalur">Perambalur</option>
+<option value="Pudukkottai">Pudukkottai</option>
+<option value="Ramanathapuram">Ramanathapuram</option>
+<option value="Ranipet">Ranipet</option>
+<option value="Salem">Salem</option>
+<option value="Sivaganga">Sivaganga</option>
+<option value="Tenkasi">Tenkasi</option>
+<option value="Thanjavur">Thanjavur</option>
+<option value="Theni">Theni</option>
+<option value="Thoothukudi">Thoothukudi</option>
+<option value="Tiruchirappalli">Tiruchirappalli</option>
+<option value="Tirunelveli">Tirunelveli</option>
+<option value="Tirupattur">Tirupattur</option>
+<option value="Tiruppur">Tiruppur</option>
+<option value="Tiruvallur">Tiruvallur</option>
+<option value="Tiruvannamalai">Tiruvannamalai</option>
+<option value="Tiruvarur">Tiruvarur</option>
+<option value="Vellore">Vellore</option>
+<option value="Viluppuram">Viluppuram</option>
+<option value="Virudhunagar">Virudhunagar</option>
+</select>
+
+          
+
+
+            <label>Smoker:</label>
+            <select name="smoker" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br><hr>
+        </div>
+
+        <!-- Family Count -->
+        <div id="family_count_div" style="display:none;">
+            <label>Number of Family Members:</label>
+            <input type="number" id="family_count" name="family_count" min="1" max="10" onchange="showFamilyForms()">
+            <div id="family_forms"></div>
+        </div>
+
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

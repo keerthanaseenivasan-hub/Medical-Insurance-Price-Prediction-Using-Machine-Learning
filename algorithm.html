@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Algorithm Explanation</title>
+    <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+/* Background */
+
+body{
+
+background:
+linear-gradient(rgba(26, 210, 231, 0.6),rgba(13, 163, 201, 0.6)),
+url("/static/m2.jpg");
+
+background-size:cover;
+background-position:center;
+
+min-height:100vh;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+padding:40px;
+
+color:white;
+
+}
+
+/* Floating particles */
+
+body::before,
+body::after{
+
+content:"";
+
+position:absolute;
+
+width:250px;
+height:250px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,0.08);
+
+animation:floatBg 10s infinite alternate;
+
+}
+
+body::before{
+
+top:10%;
+left:15%;
+
+}
+
+body::after{
+
+bottom:10%;
+right:10%;
+
+}
+
+@keyframes floatBg{
+
+from{transform:translateY(0);}
+to{transform:translateY(-50px);}
+
+}
+
+/* Container */
+
+.container{
+
+background:rgba(255,255,255,0.15);
+
+backdrop-filter:blur(12px);
+
+padding:30px;
+
+border-radius:10px;
+
+width:800px;
+
+box-shadow:
+0 0 20px rgba(74,144,226,0.4),
+0 0 40px rgba(74,144,226,0.2);
+
+}
+
+/* Title */
+
+h1{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+/* Section heading */
+
+h2{
+
+color:#6f10ce;
+
+margin-top:25px;
+
+}
+
+/* Paragraph */
+
+p{
+
+background:rgba(255,255,255,0.15);
+
+padding:15px;
+
+border-radius:6px;
+
+line-height:1.6;
+
+border-left:4px solid #4a90e2;
+
+}
+
+/* Button */
+
+.back{
+
+display:block;
+
+text-align:center;
+
+margin-top:25px;
+
+}
+
+a{
+
+text-decoration:none;
+
+background:linear-gradient(45deg,#4a90e2,#007bff);
+
+color:white;
+
+padding:10px 20px;
+
+border-radius:6px;
+
+transition:0.3s;
+
+}
+
+a:hover{
+
+transform:scale(1.05);
+
+box-shadow:0 0 15px white;
+
+}
+
+
+</style>
+
+
+</head>
+
+<body>
+
+<h1>Machine Learning Algorithm Explanation</h1>
+
+<h2>1️⃣ Random Forest</h2>
+<p>
+Random Forest is an ensemble learning algorithm used for both regression and classification problems.
+It works by creating multiple Decision Trees during training and combining their outputs.
+Each tree is built using a random subset of data and features, which improves diversity
+and reduces overfitting.
+<br><br>
+For insurance price prediction, Random Forest helps in analyzing multiple factors such as age,
+BMI, smoking habits, region, and number of dependents to produce a stable and accurate premium estimate.
+Its main advantages are high accuracy, robustness, and ability to handle large datasets.
+</p>
+
+<h2>2️⃣ Gradient Boosting</h2>
+<p>
+Gradient Boosting is a powerful boosting algorithm that builds models sequentially.
+Instead of building trees independently, it creates each new tree to correct the errors
+made by the previous tree.
+<br><br>
+This step-by-step error correction improves prediction performance significantly.
+In medical insurance prediction, Gradient Boosting can capture complex relationships
+between health-related features and premium costs.
+It usually provides higher accuracy but requires careful tuning to prevent overfitting.
+</p>
+
+<h2>3️⃣ CatBoost</h2>
+<p>
+CatBoost is an advanced Gradient Boosting algorithm developed by Yandex.
+It is specifically designed to handle categorical features automatically without
+extensive preprocessing.
+<br><br>
+In insurance datasets, features like region and gender are categorical.
+CatBoost processes these efficiently and reduces prediction bias.
+It also includes built-in techniques to prevent overfitting and improve model stability.
+Because of its speed and accuracy, CatBoost is widely used in real-world ML applications.
+</p>
+
+<a href="{{ url_for('index') }}">⬅ Back to Home</a>
+
+</body>
+</html>

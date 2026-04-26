@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Insurance Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:
+                linear-gradient(rgba(18, 104, 196, 0.5),rgba(18, 104, 196, 0.5)),
+                url("/static/m1.jpg");
+            background-size:cover;
+            background-position:center;
+            color:rgb(32, 18, 190);
+            overflow:hidden;
+        }
+
+        .container{
+            position:relative;
+            z-index:1;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            text-align:center;
+        }
+
+        .particles{
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+            z-index:0;
+            pointer-events:none;
+        }
+
+        .particles span{
+            position:absolute;
+            width:6px;
+            height:6px;
+            background:#007ff0;
+            border-radius:50%;
+            opacity:0.6;
+            animation:floatParticle 18s linear infinite;
+        }
+
+        .particles span:nth-child(1){left:10%;}
+        .particles span:nth-child(2){left:30%;}
+        .particles span:nth-child(3){left:50%;}
+        .particles span:nth-child(4){left:70%;}
+        .particles span:nth-child(5){left:90%;}
+
+        @keyframes floatParticle{
+            0%{transform:translateY(100vh); opacity:0;}
+            50%{opacity:0.7;}
+            100%{transform:translateY(-100px); opacity:0;}
+        }
+
+        .medical-icon{
+            font-size:55px;
+            color:#4a90e2;
+            margin-bottom:10px;
+            animation:crossGlow 2s infinite alternate;
+        }
+
+        @keyframes crossGlow{
+            from{transform:scale(1); text-shadow:0 0 10px #4a90e2;}
+            to{transform:scale(1.2); text-shadow:0 0 25px #4a90e2;}
+        }
+
+        h1{
+            margin-bottom:10px;
+            font-size:36px;
+        }
+
+        .heartbeat{
+            width:220px;
+            margin:10px auto 25px;
+        }
+
+        .heartbeat svg{
+            width:100%;
+            height:50px;
+        }
+
+        .heartbeat polyline{
+            fill:none;
+            stroke:#FF0000;
+            stroke-width:4;
+            stroke-dasharray:400;
+            stroke-dashoffset:400;
+            animation:heartMove 2s linear infinite;
+        }
+
+        @keyframes heartMove{
+            0%{stroke-dashoffset:400;}
+            100%{stroke-dashoffset:0;}
+        }
+
+        form{
+            background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(12px);
+            padding:35px;
+            border-radius:12px;
+            border:1px solid rgba(255,255,255,0.3);
+            box-shadow:
+                0 0 20px rgba(74,144,226,0.5),
+                0 0 40px rgba(74,144,226,0.3);
+            width:360px;
+            display:flex;
+            flex-direction:column;
+            animation:floatBox 3s ease-in-out infinite alternate;
+            z-index:1;
+        }
+
+        @keyframes floatBox{
+            from{transform:translateY(0);}
+            to{transform:translateY(-8px);}
+        }
+
+        label{
+            font-weight:600;
+            margin-top:10px;
+            margin-bottom:5px;
+        }
+
+        select{
+            width:100%;
+            padding:12px;
+            border-radius:6px;
+            border:none;
+            outline:none;
+            font-size:15px;
+        }
+
+        button{
+            margin-top:20px;
+            padding:12px;
+            background:linear-gradient(45deg,#4a90e2,#007bff);
+            border:none;
+            color:white;
+            font-size:16px;
+            border-radius:6px;
+            cursor:pointer;
+            position:relative;
+            overflow:hidden;
+        }
+
+        button::before{
+            content:"";
+            position:absolute;
+            top:0;
+            left:-100%;
+            width:100%;
+            height:100%;
+            background:linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.6),
+                transparent
+            );
+            transition:0.5s;
+        }
+
+        button:hover::before{
+            left:100%;
+        }
+
+        button:hover{
+            transform:scale(1.05);
+            box-shadow:0 0 15px white;
+        }
+
+        hr{
+            margin:40px 0 20px;
+            width:60%;
+            border:1px solid rgba(255,255,255,0.3);
+        }
+
+        h3{
+            margin-bottom:10px;
+        }
+
+        ul{
+            list-style:none;
+            padding:0;
+        }
+
+        ul li{
+            margin:10px 0;
+        }
+
+        ul li a{
+            text-decoration:none;
+            color:#007ff0;
+            font-weight:500;
+        }
+
+        ul li a:hover{
+            text-decoration:underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="particles">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="medical-icon">+</div>
+
+        <h1>Medical Insurance Prediction</h1>
+
+        <div class="heartbeat">
+            <svg viewBox="0 0 500 100">
+                <polyline points="0,50 40,50 60,20 80,80 100,50 140,50 160,30 180,70 200,50 500,50"/>
+            </svg>
+        </div>
+
+        <form action="{{ url_for('select') }}" method="POST">
+            <label for="algorithm">Select Algorithm:</label>
+            <select name="algorithm" id="algorithm" required>
+                <option value="rf">Random Forest</option>
+                <option value="gb">Gradient Boosting</option>
+                <option value="cat">CatBoost</option>
+            </select>
+
+            <label for="insurance_type">Select Insurance Type:</label>
+            <select name="insurance_type" id="insurance_type" required>
+                <option value="single">Single</option>
+                <option value="family">Family</option>
+            </select>
+
+            <button type="submit">Next</button>
+        </form>
+
+        <hr>
+
+        <h3>Additional Links:</h3>
+        <ul>
+            <li><a href="{{ url_for('algorithm_explanation') }}">Algorithm Explanation</a></li>
+            <li><a href="{{ url_for('algorithm_performance') }}">Algorithm Performance</a></li>
+        </ul>
+    </div>
+</body>
+</html>
